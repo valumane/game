@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8" />
+    <title>bonhomme qui marche</title>
+    <style>
+
+        * { padding: 0; margin-top: 10px; }
+        canvas { background: #eee; display: block; margin: 0 auto; border: 2px solid black;}
+        button{width: 150px}
+
+    </style>
+</head>
+<body onload="startgame()">
+
+<canvas id="myCanvas" width="800px" height="500px"></canvas>
+
+<script>
+function startgame() {
+    document.body.addEventListener("keydown", updateKeyDown);
+    document.body.addEventListener("keyup", updateKeyUp);
+    player();
+}
+
+    var keys = [];
+
+    function updateKeyDown(e){
+
+        if(e.keyCode === 37 || e.keyCode === 39 || e.keyCode===38 || e.keyCode === 40){
+            keys[e.keyCode] = true;
+        }
+    }
+    function updateKeyUp(e){
+
+        if(e.keyCode ===  37 || e.keyCode === 39 || e.keyCode===38 || e.keyCode === 40){
+            keys[e.keyCode] = false;
+        }
+    }
+
+    function player(){
+        if(keys[37]){
+            move_left()
+        }else
+        if (keys[39]){
+            move_right();
+        }else
+            if(keys[38]){
+                move_top();
+            }else
+            if(keys[40]){
+                move_bottom();
+            }
+
+        setTimeout(player,10);
+    }
+
+
+    var canvas = document.getElementById("myCanvas");
+    var ctx = canvas.getContext("2d");
+
+    var x = canvas.width/2;
+    var y = canvas.height;
+
+    var taille = 30;
+    var largeur = 30;
+
+    var origineX = x-largeur;
+    var origineY = y-taille
+
+    var dx = origineX;
+    var dy = origineY;
+
+    ctx.beginPath();
+    ctx.rect(origineX,origineY,30,50);
+    ctx.fillStyle = "red";
+    ctx.fill();
+    ctx.closePath();
+
+    function move_left(){
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            if(dx===0){
+
+            } else dx=dx-2;
+            document.getElementById("x").value = dx;
+            ctx.beginPath();
+            ctx.rect(dx,dy,largeur,taille);
+            ctx.fillStyle = "red" ;
+            ctx.fill();
+            ctx.closePath();
+}
+
+
+    function move_right(){
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+
+        document.getElementById("x").value = dx;
+        if(dx===canvas.width-largeur){
+
+        } else dx=dx+2;
+        ctx.beginPath();
+        ctx.rect(dx,dy,largeur,taille);
+        ctx.fillStyle = "red" ;
+        ctx.fill();
+        ctx.closePath();
+
+    }
+    function move_top(){
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+
+        document.getElementById("y").value = dy;
+        if(dy===0){
+
+
+        } else dy=dy-2;
+        ctx.beginPath();
+        ctx.rect(dx,dy,largeur,taille);
+        ctx.fillStyle = "red" ;
+        ctx.fill();
+        ctx.closePath();
+
+    }
+
+function move_bottom(){
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+
+    document.getElementById("y").value = dy;
+    if(dy===canvas.height-30){
+
+
+    } else dy=dy+2;
+    ctx.beginPath();
+    ctx.rect(dx,dy,largeur,taille);
+    ctx.fillStyle = "red" ;
+    ctx.fill();
+    ctx.closePath();
+
+}
+
+</script>
+
+<p> x <input id="x" value=""> </p>
+<p> y <input id="y" value=""> </p>
+
+
+</body>
+</html>
